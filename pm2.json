@@ -1,0 +1,14 @@
+{
+  "apps": [
+    {
+      "name": "website",
+      "script": "node_modules/next/dist/bin/next",
+      "args": "start --port 3000",
+      "cwd": "./",
+      "exec_mode": "cluster",
+      "instances": "max",
+      "log_file": "server.log",
+      "merge_logs": true
+    }
+  ]
+}
