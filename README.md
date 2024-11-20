@@ -166,16 +166,16 @@ server {
         # Add security and behavior-defining headers
 
         # Prevents the website from being embedded in any iframe, even on the same origin.
-        add_header "X-Frame-Options" "DENY" always;
-        # Disables the browser’s built-in XSS filter.
-        add_header X-XSS-Protection "0";
+        add_header X-Frame-Options "DENY";
+        # Enables the browser’s built-in XSS filter and completely blocks the page.
+        add_header X-XSS-Protection "1; mode=block";
         # Controls how much of the referrer information is sent when navigating from your site to another.
         add_header Referrer-Policy "strict-origin-when-cross-origin";
         # Ensures your site’s default content type is text/html and uses UTF-8 character encoding.
         default_type text/html;
         charset utf-8;
         # Allows cross-origin requests from the specified domain.
-        add_header Access-Control-Allow-Origin "https://your-domain.com";
+        add_header Access-Control-Allow-Origin "https://elfatuaki.com";
         # Enhances security by isolating your site from other cross-origin contexts.
         add_header Cross-Origin-Opener-Policy "same-origin";
         # Ensures that resources embedded in your site are loaded from the same origin or have proper CORS headers.
@@ -184,6 +184,10 @@ server {
         add_header Cross-Origin-Resource-Policy "same-site";
         # Limits access to sensitive APIs like geolocation, camera, or microphone.
         add_header Permissions-Policy "geolocation=(), camera=(), microphone=()";
+        # Enforces the use of HTTPS and specifies a max age for the HSTS policy.
+        add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+        # Prevents MIME type sniffing, forcing browsers to use the declared Content-Type.
+        add_header X-Content-Type-Options nosniff;
 
     listen 443 ssl; # managed by Certbot
     ssl_certificate /etc/letsencrypt/live/your-domain.com/fullchain.pem; # managed by Certbot
@@ -208,8 +212,8 @@ server {
 }
 ```
 
-Recommended HTTP Headers: [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html)
-
+- Recommended Http Headers: [OWASP Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Headers_Cheat_Sheet.html)
+- Scan Security Headers: [Security Headers](https://securityheaders.com)
 
 ### Validate, Enable Configuration and Restart Nginx
 
